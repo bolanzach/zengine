@@ -6,5 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(zengine main.cpp)
+add_executable(zengine
+        src/main.cpp
+        src/display.cpp
+)
+
 target_link_libraries(zengine ${SDL2_LIBRARIES})
