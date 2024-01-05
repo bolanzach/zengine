@@ -1,6 +1,3 @@
-#ifndef DISPLAY_H
-#define DISPLAY_H
-
 #include "display.h"
 
 //// header vars
@@ -51,12 +48,19 @@ bool initializeWindow() {
     return true;
 }
 
+void destroyWindow() {
+    free(colorBuffer);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}
+
 void renderColorBuffer() {
     SDL_UpdateTexture(
         colorBufferTexture,
         nullptr,
         colorBuffer,
-        (int) (windowWidth * sizeof(uint32_t))
+        (int) (windowWidth * sizeof(color_t))
     );
     SDL_RenderCopy(renderer, colorBufferTexture, nullptr, nullptr);
 }
@@ -75,4 +79,32 @@ void drawPixel(int x, int y, color_t color) {
     }
 }
 
-#endif
+void drawLineDDA(int x0, int y0, int x1, int y1, color_t color) {
+    // Run
+    int dx = x1 - x0;
+
+    // Rise
+    int dy = y1 - y0;
+
+    // Which side (x | y) is longer
+    int longestSideSteps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+
+    // How much should we increment x and y
+    float xIncrement = dx / (float) longestSideSteps;
+    float yIncrement = dy / (float) longestSideSteps;
+
+    float currentX = x0;
+    float currentY = y0;
+
+    for (int i = 0; i <= longestSideSteps; i++) {
+        drawPixel(round(currentX), round(currentY), color);
+        currentX += xIncrement;
+        currentY += yIncrement;
+    }
+}
+
+void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2, color_t color) {
+    drawLineDDA(x0, y0, x1, y1, color);
+    drawLineDDA(x1, y1, x2, y2, color);
+    drawLineDDA(x2, y2, x0, y0, color);
+}

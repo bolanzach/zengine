@@ -9,6 +9,8 @@ include_directories(${SDL2_INCLUDE_DIRS})
 add_executable(zengine
         src/main.cpp
         src/display.cpp
+        src/vector.h
+        src/vector.cpp
 )
 
 target_link_libraries(zengine ${SDL2_LIBRARIES})
