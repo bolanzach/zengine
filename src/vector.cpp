@@ -24,16 +24,31 @@ Vector3::Vector3() {
 }
 
 void Vector3::rotateAroundX(float angle) {
-    this->y = this->y * cos(angle) - this->z * sin(angle);
-    this->z = this->y * sin(angle) + this->z * cos(angle);
+    Vector3 rotatedVector = Vector3(
+            this->x,
+            this->y * cos(angle) - this->z * sin(angle),
+            this->y * sin(angle) + this->z * cos(angle)
+    );
+    this->y = rotatedVector.y;
+    this->z = rotatedVector.z;
 }
 
 void Vector3::rotateAroundY(float angle) {
-    this->x = this->x * cos(angle) - this->z * sin(angle);
-    this->z = this->x * sin(angle) + this->z * cos(angle);
+    Vector3 rotatedVector = Vector3(
+            this->x * cos(angle) - this->z * sin(angle),
+            this->y,
+            this->x * sin(angle) + this->z * cos(angle)
+    );
+    this->x = rotatedVector.x;
+    this->z = rotatedVector.z;
 }
 
 void Vector3::rotateAroundZ(float angle) {
-    this->x = this->x * cos(angle) - this->y * sin(angle);
-    this->y = this->x * sin(angle) + this->y * cos(angle);
+    Vector3 rotatedVector = Vector3(
+            this->x * cos(angle) - this->y * sin(angle),
+            this->x * sin(angle) + this->y * cos(angle),
+            this->x
+    );
+    this->x = rotatedVector.x;
+    this->y = rotatedVector.y;
 }
