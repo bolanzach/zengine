@@ -1,3 +1,6 @@
+#ifndef ZENGINE_DISPLAY_H
+#define ZENGINE_DISPLAY_H
+
 #include "SDL.h"
 
 #define FPS 30
@@ -15,8 +18,10 @@ extern int windowHeight;
 
 bool initializeWindow();
 void destroyWindow();
-void renderColorBuffer(void);
+void renderColorBuffer();
 void clearColorBuffer(color_t color);
 void drawPixel(int x, int y, color_t color);
 void drawLineDDA(int x0, int y0, int x1, int y1, color_t color);
 void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2, color_t color);
+
+#endif //ZENGINE_DISPLAY_H

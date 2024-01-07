@@ -18,6 +18,10 @@ public:
 
     Vector3(float x, float y, float z);
     Vector3();
+
+    void rotateAroundX(float angle);
+    void rotateAroundY(float angle);
+    void rotateAroundZ(float angle);
 };
 
 #endif //ZENGINE_VECTOR_H

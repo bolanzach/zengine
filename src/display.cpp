@@ -28,8 +28,8 @@ bool initializeWindow() {
             "Zengine",
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
-            800,
-            500,
+            windowWidth,
+            windowHeight,
             SDL_WINDOW_SHOWN
     );
     if (!window) {
@@ -68,7 +68,8 @@ void renderColorBuffer() {
 void clearColorBuffer(color_t color) {
     for (int y = 0; y < windowHeight; y++) {
         for (int x = 0; x < windowWidth; x++) {
-            drawPixel(x, y, color);
+            //drawPixel(x, y, color);
+            colorBuffer[(windowWidth * y) + x] = color;
         }
     }
 }
