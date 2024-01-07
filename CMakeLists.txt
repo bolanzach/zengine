@@ -11,6 +11,10 @@ add_executable(zengine
         src/display.cpp
         src/vector.h
         src/vector.cpp
+        src/mesh.h
+        src/triangle.h
+        src/mesh.cpp
+        src/triangle.cpp
 )
 
 target_link_libraries(zengine ${SDL2_LIBRARIES})

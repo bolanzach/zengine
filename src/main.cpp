@@ -2,17 +2,16 @@
 #include "SDL.h"
 #include "display.h"
 #include "vector.h"
-
-#define NUMBER_OF_POINTS (9 * 9 * 9)
-Vector3 cubePoints[NUMBER_OF_POINTS];
-Vector2 projectedPoints[NUMBER_OF_POINTS];
-float tempCubeRotation = 0;
+#include "mesh.h"
 
 bool isRunning = false;
 uint previousFrameTime = 0;
 
 float fieldOfViewFactor = 640;
 Vector3 cameraPosition = Vector3(0, 0, -5);
+
+Mesh mesh;
+std::vector<Triangle2> trianglesToRender = std::vector<Triangle2>();
 
 void setup() {
     isRunning = initializeWindow();
@@ -30,20 +29,7 @@ void setup() {
         windowHeight
     );
 
-    int point_count = 0;
-
-    // Start loading my array of vectors
-    // From -1 to 1 (in this 9x9x9 cube)
-    for (float x = -1; x <= 1; x += 0.25) {
-        for (float y = -1; y <= 1; y += 0.25) {
-            for (float z = -1; z <= 1; z += 0.25) {
-                Vector3 newPoint = Vector3(x, y, z);
-                cubePoints[point_count++] = newPoint;
-            }
-        }
-    }
-
-    std::cout << cubePoints[0].x << std::endl;
+    mesh = loadObjFileDataToMesh("../assets/free_car.obj");
 }
 
 // Receives a 3D point and projects it to a 2D point. This is using left-handed coordinate system
@@ -79,31 +65,53 @@ void update() {
 
     previousFrameTime = SDL_GetTicks();
 
-    tempCubeRotation += 0.01;
+    trianglesToRender.clear();
 
-    for (int i = 0; i < NUMBER_OF_POINTS; i++) {
-        Vector3 point = cubePoints[i];
+    mesh.rotation.y += 0.01;
 
-        // Rotate the point
-        point.rotateAroundY(tempCubeRotation);
+    // Iterate all the Faces on our Mesh
+    for (auto face : mesh.faces) {
+        Triangle2 projectedTriangle;
+        Vector3* faceVertices = mesh.getFaceVertices(face);
 
-        // Translate vertex away from the camera
-        point.z -= cameraPosition.z;
+        // Apply transformations to each vertex
+        for (int j = 0; j < 3; j++) {
+            Vector3 vertex = faceVertices[j];
 
-        // Project the current point
-        Vector2 projectedPoint = project(point);
+            // Rotations
+            vertex.rotateAroundX(mesh.rotation.x);
+            vertex.rotateAroundY(mesh.rotation.y);
+            vertex.rotateAroundZ(mesh.rotation.z);
 
-        // Save the projected 2D vector in the array of projected points
-        projectedPoints[i] = projectedPoint;
+            // Translate vertex away from the camera
+            vertex.z -= cameraPosition.z;
+
+            // Project the current point
+            Vector2 projectedPoint = project(vertex);
+
+            // Scale and translate the projected points to the middle of the screen
+            projectedPoint.x += (windowWidth / 2);
+            projectedPoint.y += (windowHeight / 2);
+
+            projectedTriangle.points[j] = projectedPoint;
+        }
+
+        trianglesToRender.push_back(projectedTriangle);
+        delete[] faceVertices;
     }
 }
 
 void render() {
-    for (auto point : projectedPoints) {
-        drawPixel(
-                point.x + (windowWidth / 2),
-                point.y + (windowHeight / 2),
-                0xFFFFFF00
+    // Iterate each projected triangle and render the points
+    for (auto triangle2 : trianglesToRender) {
+        drawTriangle(
+                triangle2.points[0].x,
+                triangle2.points[0].y,
+                triangle2.points[1].x,
+                triangle2.points[1].y,
+                triangle2.points[2].x,
+                triangle2.points[2].y,
+                0xFF00FF00
         );
     }
 

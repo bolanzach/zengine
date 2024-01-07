@@ -70,6 +70,20 @@ build CMakeFiles/zengine.dir/src/vector.cpp.o: CXX_COMPILER__zengine_unscanned_D
   OBJECT_DIR = CMakeFiles/zengine.dir
   OBJECT_FILE_DIR = CMakeFiles/zengine.dir/src
 
+build CMakeFiles/zengine.dir/src/mesh.cpp.o: CXX_COMPILER__zengine_unscanned_Debug /Users/zach/workspace/zengine/src/mesh.cpp || cmake_object_order_depends_target_zengine
+  DEP_FILE = CMakeFiles/zengine.dir/src/mesh.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics
+  INCLUDES = -I/usr/local/Cellar/sdl2/2.0.14_1/include/SDL2
+  OBJECT_DIR = CMakeFiles/zengine.dir
+  OBJECT_FILE_DIR = CMakeFiles/zengine.dir/src
+
+build CMakeFiles/zengine.dir/src/triangle.cpp.o: CXX_COMPILER__zengine_unscanned_Debug /Users/zach/workspace/zengine/src/triangle.cpp || cmake_object_order_depends_target_zengine
+  DEP_FILE = CMakeFiles/zengine.dir/src/triangle.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -fcolor-diagnostics
+  INCLUDES = -I/usr/local/Cellar/sdl2/2.0.14_1/include/SDL2
+  OBJECT_DIR = CMakeFiles/zengine.dir
+  OBJECT_FILE_DIR = CMakeFiles/zengine.dir/src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target zengine
@@ -78,7 +92,7 @@ build CMakeFiles/zengine.dir/src/vector.cpp.o: CXX_COMPILER__zengine_unscanned_D
 #############################################
 # Link the executable zengine
 
-build zengine: CXX_EXECUTABLE_LINKER__zengine_Debug CMakeFiles/zengine.dir/src/main.cpp.o CMakeFiles/zengine.dir/src/display.cpp.o CMakeFiles/zengine.dir/src/vector.cpp.o
+build zengine: CXX_EXECUTABLE_LINKER__zengine_Debug CMakeFiles/zengine.dir/src/main.cpp.o CMakeFiles/zengine.dir/src/display.cpp.o CMakeFiles/zengine.dir/src/vector.cpp.o CMakeFiles/zengine.dir/src/mesh.cpp.o CMakeFiles/zengine.dir/src/triangle.cpp.o
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6
   LINK_LIBRARIES = -L/usr/local/Cellar/sdl2/2.0.14_1/lib  -lSDL2
   OBJECT_DIR = CMakeFiles/zengine.dir

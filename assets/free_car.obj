@@ -1,6 +1,6 @@
 # Blender v2.93.0 Beta OBJ File: 'free car 001.blend'
 # www.blender.org
-mtllib free car 001.mtl
+mtllib free car.mtl
 o car_body_Circle.073
 v 0.655631 0.433545 1.624929
 v 0.655631 0.480010 1.639565

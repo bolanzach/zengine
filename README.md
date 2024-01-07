@@ -1,6 +1,6 @@
 # zengine
 
-3d rendering engine in c++
+3D rendering engine in C++
 
 ### Dependencies
 
