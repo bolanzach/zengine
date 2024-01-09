@@ -11,6 +11,26 @@ Vector2::Vector2() {
     this->y = 0;
 }
 
+float Vector2::getMagnitude() const {
+    return sqrt(pow(this->x, 2) + pow(this->y, 2));
+}
+
+Vector2 Vector2::add(Vector2 vector) {
+    return {this->x + vector.x, this->y + vector.y};
+}
+
+Vector2 Vector2::subtract(Vector2 vector) {
+    return {this->x - vector.x, this->y - vector.y};
+}
+
+Vector2 Vector2::multiply(float scalar) {
+    return {this->x * scalar, this->y * scalar};
+}
+
+Vector2 Vector2::divide(float scalar) {
+    return {this->x / scalar, this->y / scalar};
+}
+
 Vector3::Vector3(float x, float y, float z) {
     this->x = x;
     this->y = y;
@@ -51,4 +71,24 @@ void Vector3::rotateAroundZ(float angle) {
     );
     this->x = rotatedVector.x;
     this->y = rotatedVector.y;
+}
+
+float Vector3::getMagnitude() const {
+    return sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2));
+}
+
+Vector3 Vector3::add(Vector3 vector) {
+    return {this->x + vector.x, this->y + vector.y, this->z + vector.z};
+}
+
+Vector3 Vector3::subtract(Vector3 vector) {
+    return {this->x - vector.x, this->y - vector.y, this->z - vector.z};
+}
+
+Vector3 Vector3::multiply(float scalar) {
+    return {this->x * scalar, this->y * scalar, this->z * scalar};
+}
+
+Vector3 Vector3::divide(float scalar) {
+    return {this->x / scalar, this->y / scalar, this->z / scalar};
 }
