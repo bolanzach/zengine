@@ -34,6 +34,8 @@ public:
     Vector3 subtract(Vector3 vector);
     Vector3 multiply(float scalar);
     Vector3 divide(float scalar);
+    Vector3 crossProduct(Vector3 vector);
+    float dotProduct(Vector3 vector);
 };
 
 #endif //ZENGINE_VECTOR_H

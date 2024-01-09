@@ -8,7 +8,7 @@ bool isRunning = false;
 uint previousFrameTime = 0;
 
 float fieldOfViewFactor = 640;
-Vector3 cameraPosition = Vector3(0, 0, -5);
+Vector3 cameraPosition = Vector3(0, 0, 0);
 
 Mesh mesh;
 std::vector<Triangle2> trianglesToRender = std::vector<Triangle2>();
@@ -67,16 +67,18 @@ void update() {
 
     trianglesToRender.clear();
 
-    mesh.rotation.y += 0.01;
+    mesh.rotation.y += 0.05;
+    mesh.rotation.z += 0.05;
 
     // Iterate all the Faces on our Mesh
     for (auto face : mesh.faces) {
         Triangle2 projectedTriangle;
+        Vector3 transformedVertices[3];
         Vector3* faceVertices = mesh.getFaceVertices(face);
 
-        // Apply transformations to each vertex
-        for (int j = 0; j < 3; j++) {
-            Vector3 vertex = faceVertices[j];
+        // Apply transformations to each vertex of the Face
+        for (int i = 0; i < 3; i++) {
+            Vector3 vertex = faceVertices[i];
 
             // Rotations
             vertex.rotateAroundX(mesh.rotation.x);
@@ -84,7 +86,38 @@ void update() {
             vertex.rotateAroundZ(mesh.rotation.z);
 
             // Translate vertex away from the camera
-            vertex.z -= cameraPosition.z;
+//            vertex.z -= cameraPosition.z;
+            vertex.z += 5;
+
+            transformedVertices[i] = vertex;
+        }
+
+        // Backface culling
+        Vector3 vectorA = transformedVertices[0];
+        Vector3 vectorB = transformedVertices[1];
+        Vector3 vectorC = transformedVertices[2];
+
+        Vector3 vectorAB = vectorB.subtract(vectorA);
+        Vector3 vectorAC = vectorC.subtract(vectorA);
+
+        // Compute the Face normal to find the perpendicular
+        // Tbe order matters based on the handiness of the coordinate system
+        Vector3 normalVector = vectorAB.crossProduct(vectorAC);
+
+        // Find the vector between a point in the FAce and the camera origin
+        Vector3 cameraRay = cameraPosition.subtract(vectorA);
+
+        // Check the alignment of the camera ray and the Face normal
+        float alignment = normalVector.dotProduct(cameraRay);
+
+        // Skip this Face if it's not facing the camera
+        if (alignment < 0) {
+            continue;
+        }
+
+        // Project the 3 vertices of the Face
+        for (int i = 0; i < 3; i++) {
+            Vector3 vertex = transformedVertices[i];
 
             // Project the current point
             Vector2 projectedPoint = project(vertex);
@@ -93,7 +126,7 @@ void update() {
             projectedPoint.x += (windowWidth / 2);
             projectedPoint.y += (windowHeight / 2);
 
-            projectedTriangle.points[j] = projectedPoint;
+            projectedTriangle.points[i] = projectedPoint;
         }
 
         trianglesToRender.push_back(projectedTriangle);

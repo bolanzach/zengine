@@ -24,6 +24,9 @@ Mesh loadObjFileDataToMesh(const char* fileName) {
     printf("Reading .obj file: %s\n", fileName);
     Mesh mesh = Mesh();
 
+    // Fix car rotation
+    mesh.rotation.x = 9.45;
+
     char line[1024];
     while (fgets(line, 1024, file)) {
         // Vertex data

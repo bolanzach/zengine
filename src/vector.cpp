@@ -38,9 +38,9 @@ Vector3::Vector3(float x, float y, float z) {
 }
 
 Vector3::Vector3() {
-    this->x = 0;
-    this->y = 0;
-    this->z = 0;
+    this->x = 0.0;
+    this->y = 0.0;
+    this->z = 0.0;
 }
 
 void Vector3::rotateAroundX(float angle) {
@@ -91,4 +91,16 @@ Vector3 Vector3::multiply(float scalar) {
 
 Vector3 Vector3::divide(float scalar) {
     return {this->x / scalar, this->y / scalar, this->z / scalar};
+}
+
+Vector3 Vector3::crossProduct(Vector3 vector) {
+    return {
+            this->y * vector.z - this->z * vector.y,
+            this->z * vector.x - this->x * vector.z,
+            this->x * vector.y - this->y * vector.x
+    };
+}
+
+float Vector3::dotProduct(Vector3 vector) {
+    return (this->x * vector.x) + (this->y * vector.y) + (this->z * vector.z);
 }
