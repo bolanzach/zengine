@@ -1,3 +1,0 @@
-/Users/zach/workspace/zengine/cmake-build-debug/CMakeFiles/zengine.dir
-/Users/zach/workspace/zengine/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/zach/workspace/zengine/cmake-build-debug/CMakeFiles/rebuild_cache.dir

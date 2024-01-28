@@ -1,5 +1,6 @@
 #include <iostream>
 #include "SDL.h"
+#include "color.h"
 #include "display.h"
 #include "vector.h"
 #include "mesh.h"
@@ -141,26 +142,12 @@ void update() {
 void render() {
     // Iterate each projected triangle and render the points
     for (auto triangle2 : trianglesToRender) {
-        //triangle2.drawOutline();
-
-        triangle2.drawFilled();
-
-
-//        drawTriangle(
-//                triangle2.points[0].x,
-//                triangle2.points[0].y,
-//                triangle2.points[1].x,
-//                triangle2.points[1].y,
-//                triangle2.points[2].x,
-//                triangle2.points[2].y,
-//                0xFF00FF00
-//        );
+        triangle2.drawFilled(COLOR_RED);
+        triangle2.drawOutline();
     }
 
-    //drawTriangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
-
     renderColorBuffer();
-    clearColorBuffer(0xFF000000);
+    clearColorBuffer(COLOR_BLACK);
 
     SDL_RenderPresent(renderer);
 }

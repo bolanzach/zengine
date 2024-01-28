@@ -2,6 +2,7 @@
 #define ZENGINE_TRIANGLE_H
 
 #include "vector.h"
+#include "display.h"
 
 /// A Triangle is a collection of 3 Vector2 points. These are the actual (x,y) points on the screen
 class Triangle2 {
@@ -12,7 +13,7 @@ public:
     Triangle2();
 
     void drawOutline();
-    void drawFilled();
+    void drawFilled(color_t color);
 };
 
 /// A Face is a Triangle in 3D space. It contains 3 fields that each are an index to a Vector3 in
