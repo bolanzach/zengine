@@ -73,8 +73,18 @@ void Vector3::rotateAroundZ(float angle) {
     this->y = rotatedVector.y;
 }
 
+void Vector3::normalize() {
+    Vector3 normal = this->getNormalizedVector();
+    this->x = normal.x;
+    this->y = normal.y;
+    this->z = normal.z;
+}
+
 float Vector3::getMagnitude() const {
-    return sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2));
+    return sqrt(
+            pow(this->x, 2) +
+            pow(this->y, 2) +
+            pow(this->z, 2));
 }
 
 Vector3 Vector3::add(Vector3 vector) {
@@ -103,4 +113,9 @@ Vector3 Vector3::crossProduct(Vector3 vector) {
 
 float Vector3::dotProduct(Vector3 vector) {
     return (this->x * vector.x) + (this->y * vector.y) + (this->z * vector.z);
+}
+
+Vector3 Vector3::getNormalizedVector() {
+    float magnitude = this->getMagnitude();
+    return {this->x / magnitude, this->y / magnitude, this->z / magnitude};
 }

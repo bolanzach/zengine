@@ -1,3 +1,4 @@
+#include <cmath>
 #include "display.h"
 
 //// header vars
@@ -68,8 +69,7 @@ void renderColorBuffer() {
 void clearColorBuffer(color_t color) {
     for (int y = 0; y < windowHeight; y++) {
         for (int x = 0; x < windowWidth; x++) {
-            //drawPixel(x, y, color);
-            colorBuffer[(windowWidth * y) + x] = color;
+            drawPixel(x, y, color);
         }
     }
 }
@@ -88,7 +88,7 @@ void drawLineDDA(int x0, int y0, int x1, int y1, color_t color) {
     int dy = y1 - y0;
 
     // Which side (x | y) is longer
-    int longestSideSteps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+    int longestSideSteps = std::abs(dx) > std::abs(dy) ? std::abs(dx) : std::abs(dy);
 
     // How much should we increment x and y
     float xIncrement = dx / (float) longestSideSteps;
@@ -98,14 +98,8 @@ void drawLineDDA(int x0, int y0, int x1, int y1, color_t color) {
     float currentY = y0;
 
     for (int i = 0; i <= longestSideSteps; i++) {
-        drawPixel(round(currentX), round(currentY), color);
+        drawPixel(std::round(currentX), std::round(currentY), color);
         currentX += xIncrement;
         currentY += yIncrement;
     }
-}
-
-void drawTriangle(int x0, int y0, int x1, int y1, int x2, int y2, color_t color) {
-    drawLineDDA(x0, y0, x1, y1, color);
-    drawLineDDA(x1, y1, x2, y2, color);
-    drawLineDDA(x2, y2, x0, y0, color);
 }

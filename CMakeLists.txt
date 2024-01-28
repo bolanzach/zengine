@@ -15,6 +15,8 @@ add_executable(zengine
         src/triangle.h
         src/mesh.cpp
         src/triangle.cpp
+        src/playground.cpp
+        src/playground.h
 )
 
 target_link_libraries(zengine ${SDL2_LIBRARIES})

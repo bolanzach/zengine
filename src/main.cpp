@@ -68,11 +68,10 @@ void update() {
     trianglesToRender.clear();
 
     mesh.rotation.y += 0.05;
-    mesh.rotation.z += 0.05;
+    //mesh.rotation.z += 0.05;
 
     // Iterate all the Faces on our Mesh
     for (auto face : mesh.faces) {
-        Triangle2 projectedTriangle;
         Vector3 transformedVertices[3];
         Vector3* faceVertices = mesh.getFaceVertices(face);
 
@@ -93,18 +92,22 @@ void update() {
         }
 
         // Backface culling
+        // @efficiency may be another algorithm for this
         Vector3 vectorA = transformedVertices[0];
         Vector3 vectorB = transformedVertices[1];
         Vector3 vectorC = transformedVertices[2];
 
-        Vector3 vectorAB = vectorB.subtract(vectorA);
-        Vector3 vectorAC = vectorC.subtract(vectorA);
+        Vector3 vectorAB = vectorB.subtract(vectorA).getNormalizedVector();
+        Vector3 vectorAC = vectorC.subtract(vectorA).getNormalizedVector();
 
-        // Compute the Face normal to find the perpendicular
+        // Compute the Face normal to find the perpendicular vector on the Face
         // Tbe order matters based on the handiness of the coordinate system
         Vector3 normalVector = vectorAB.crossProduct(vectorAC);
 
-        // Find the vector between a point in the FAce and the camera origin
+        // Normalize the normal vector
+        normalVector.normalize();
+
+        // Find the vector between a point in the Face and the camera origin
         Vector3 cameraRay = cameraPosition.subtract(vectorA);
 
         // Check the alignment of the camera ray and the Face normal
@@ -116,6 +119,7 @@ void update() {
         }
 
         // Project the 3 vertices of the Face
+        Triangle2 projectedTriangle;
         for (int i = 0; i < 3; i++) {
             Vector3 vertex = transformedVertices[i];
 
@@ -137,16 +141,23 @@ void update() {
 void render() {
     // Iterate each projected triangle and render the points
     for (auto triangle2 : trianglesToRender) {
-        drawTriangle(
-                triangle2.points[0].x,
-                triangle2.points[0].y,
-                triangle2.points[1].x,
-                triangle2.points[1].y,
-                triangle2.points[2].x,
-                triangle2.points[2].y,
-                0xFF00FF00
-        );
+        //triangle2.drawOutline();
+
+        triangle2.drawFilled();
+
+
+//        drawTriangle(
+//                triangle2.points[0].x,
+//                triangle2.points[0].y,
+//                triangle2.points[1].x,
+//                triangle2.points[1].y,
+//                triangle2.points[2].x,
+//                triangle2.points[2].y,
+//                0xFF00FF00
+//        );
     }
+
+    //drawTriangle(300, 100, 50, 400, 500, 700, 0xFF00FF00);
 
     renderColorBuffer();
     clearColorBuffer(0xFF000000);

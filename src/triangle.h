@@ -10,6 +10,9 @@ public:
 
     Triangle2(Vector2 a, Vector2 b, Vector2 c);
     Triangle2();
+
+    void drawOutline();
+    void drawFilled();
 };
 
 /// A Face is a Triangle in 3D space. It contains 3 fields that each are an index to a Vector3 in
