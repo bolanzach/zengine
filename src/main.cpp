@@ -30,7 +30,7 @@ void setup() {
         windowHeight
     );
 
-    mesh = loadObjFileDataToMesh("../assets/free_car.obj");
+    mesh = loadObjFileDataToMesh("../assets/cube.obj");
 }
 
 // Receives a 3D point and projects it to a 2D point. This is using left-handed coordinate system
@@ -68,8 +68,9 @@ void update() {
 
     trianglesToRender.clear();
 
-    mesh.rotation.y += 0.05;
-    //mesh.rotation.z += 0.05;
+    mesh.rotation.y += 0.04;
+    mesh.rotation.z += 0.02;
+    mesh.rotation.z += 0.01;
 
     // Iterate all the Faces on our Mesh
     for (auto face : mesh.faces) {
@@ -142,7 +143,7 @@ void update() {
 void render() {
     // Iterate each projected triangle and render the points
     for (auto triangle2 : trianglesToRender) {
-        triangle2.drawFilled(COLOR_RED);
+        triangle2.drawFilled(COLOR_WHITE);
         triangle2.drawOutline();
     }
 

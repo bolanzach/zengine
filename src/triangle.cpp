@@ -2,6 +2,7 @@
 
 #include "triangle.h"
 #include "display.h"
+#include "color.h"
 
 /// Draw the top of the triangle so that the bottom is flat
 void fillFlatBottomTriangle(int x0, int y0, int x1, int y1, int x2, int y2, color_t color) {
@@ -65,7 +66,7 @@ void Triangle2::drawOutline() {
     int x2 = this->points[2].x;
     int y2 = this->points[2].y;
 
-    color_t color = 0xFF0000FF;
+    color_t color = COLOR_BLUE;
 
     drawLineDDA(x0, y0, x1, y1, color);
     drawLineDDA(x1, y1, x2, y2, color);

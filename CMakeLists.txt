@@ -18,6 +18,7 @@ add_executable(zengine
         src/playground.cpp
         src/playground.h
         src/color.h
+        src/color.cpp
 )
 
 target_link_libraries(zengine ${SDL2_LIBRARIES})
